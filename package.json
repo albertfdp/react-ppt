@@ -1,0 +1,34 @@
+{
+  "name": "react-ppt",
+  "version": "0.1.0",
+  "description": "Create powerpoint presentations with React",
+  "main": "src/index.js",
+  "repository": "https://github.com/albertfdp/react-ppt",
+  "author": "Albert Fernández",
+  "license": "MIT",
+  "scripts": {
+    "dev": "babel-node example/index.js",
+    "test": "jest",
+    "test:watch": "npm run test -- --watch"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "jest": "^21.2.1",
+    "prettier": "^1.9.2",
+    "unexpected": "^10.36.2"
+  },
+  "dependencies": {
+    "fbjs": "^0.8.16",
+    "pptxgenjs": "^1.10.0",
+    "react": "^16.2.0",
+    "react-reconciler": "^0.7.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "test/expect": "<rootDir>/test/expect.js"
+    }
+  }
+}
