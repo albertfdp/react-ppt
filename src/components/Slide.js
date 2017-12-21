@@ -1,38 +1,41 @@
 import Root from './Root';
+import PropTypes from 'prop-types';
+
+import { validateSlideProps } from '../validators';
+import { normalize } from '../utils/colors';
+
+export const SLIDE_PROPERTIES = ['backgroundColor', 'color'];
 
 class Slide extends Root {
+  static propTypes = {
+    backgroundColor: PropTypes.string,
+    color: PropTypes.string
+  };
+
+  static defaultProps = {
+    backgroundColor: '#ffffff',
+    color: '#000000'
+  };
+
   constructor(root, props) {
     super(root, props);
 
-    this.root = root;
-    this.props = props;
-    this.children = [];
+    validateSlideProps(this.props);
 
     // create a new slide
-    this.adder = this.root.pptx.addNewSlide();
+    this.slide = this.root.pptx.addNewSlide();
   }
 
-  appendChild(child) {
-    this.children.push(child);
+  setStyles(props) {
+    const { backgroundColor, color } = props;
+
+    this.slide.back = normalize(backgroundColor);
+    this.slide.color = normalize(color);
   }
 
-  removeChild(child) {
-    const index = this.children.indexOf(child);
-    this.children.splice(index, 1);
-  }
-
-  renderChildren() {
-    this.children.forEach(child => {
-      if (typeof child === 'string') {
-        this.adder.addText(child);
-      } else if (typeof child === 'object') {
-        child.render();
-      }
-    });
-  }
-
-  render() {
-    this.renderChildren();
+  async render() {
+    this.setStyles(this.props);
+    await this.renderChildren();
   }
 }
 

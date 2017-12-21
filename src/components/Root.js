@@ -9,7 +9,7 @@ class Root {
 
   appendChild(child) {
     child.parent = this;
-
+    // console.log('appendChild', child);
     this.children.push(child);
   }
 

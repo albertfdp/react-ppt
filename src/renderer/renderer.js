@@ -18,7 +18,7 @@ const PowerPointReconcilerConfig = {
     if (parentInstance.appendChild) {
       parentInstance.appendChild(child);
     } else {
-      parentInstance.slide = child;
+      parentInstance.deck = child;
     }
   },
 
@@ -73,10 +73,11 @@ const PowerPointReconcilerConfig = {
 
   mutation: {
     appendChild(parentInstance, child) {
+      console.log('appendChild', parentInstance, child);
       if (parentInstance.appendChild) {
         parentInstance.appendChild(child);
       } else {
-        parentInstance.slide = child;
+        parentInstance.deck = child;
       }
     },
 
@@ -84,7 +85,7 @@ const PowerPointReconcilerConfig = {
       if (parentInstance.appendChild) {
         parentInstance.appendChild(child);
       } else {
-        parentInstance.slide = child;
+        parentInstance.deck = child;
       }
     },
 

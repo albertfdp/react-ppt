@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { render, Deck, Slide, Text } from '../src';
 
 class App extends Component {
-  componentDidCatch(error) {
-    console.error(error);
-  }
-
   render() {
     return (
       <Deck
@@ -15,8 +11,8 @@ class App extends Component {
         subject="React"
         title="react-pptx"
       >
-        <Slide>
-          <Text>Hello</Text>
+        <Slide backgroundColor="#db3d3d" color="#ffffff">
+          <Text fontSize={30}>Hello, World!</Text>
         </Slide>
       </Deck>
     );

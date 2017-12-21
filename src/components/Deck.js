@@ -1,4 +1,5 @@
 import Root from './Root';
+import { validateDeckProps } from '../validators';
 
 export const DECK_PROPERTIES = [
   'author',
@@ -9,6 +10,15 @@ export const DECK_PROPERTIES = [
 ];
 
 class Deck extends Root {
+  static propTypes = {
+    author: PropTypes.string,
+    children: PropTypes.node,
+    company: PropTypes.string,
+    revision: PropTypes.string,
+    subject: PropTypes.string,
+    title: PropTypes.string
+  };
+
   constructor(root, props) {
     super(root, props);
 
@@ -17,45 +27,31 @@ class Deck extends Root {
 
     this.children = [];
 
-    this.applyProperties();
+    validateDeckProps(this.props);
   }
 
   _capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  applyProperties() {
-    Object.keys(this.props)
+  setProperties(props) {
+    Object.keys(props)
       .filter(prop => DECK_PROPERTIES.includes(prop))
       .map(key => {
         const method = `set${this._capitalize(key)}`;
-        const value = this.props[key];
+        const value = props[key];
 
         this.root.pptx[method].call(this.root.pptx, value);
       });
-  }
 
-  appendChild(child) {
-    this.children.push(child);
-  }
-
-  removeChild(child) {
-    const index = this.children.indexOf(child);
-
-    this.children.splice(index, 1);
-  }
-
-  async renderChildren() {
-    this.children.forEach(async child => {
-      if (typeof child === 'string') {
-        throw new Error('Yo');
-      } else if (typeof child === 'object') {
-        await child.render();
-      }
-    });
+    if (props.rtl) {
+      this.root.pptx.setRTL(true);
+    }
   }
 
   async render() {
+    this.setProperties(this.props);
+
     await this.renderChildren();
   }
 }
