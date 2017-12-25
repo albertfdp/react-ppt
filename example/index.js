@@ -12,7 +12,9 @@ class App extends Component {
         title="react-pptx"
       >
         <Slide backgroundColor="#db3d3d" color="#ffffff">
-          <Text fontSize={30}>Hello, World!</Text>
+          <Text bold color="#fffd06" fontSize={30} x="50%" y="50%">
+            Hello, World!
+          </Text>
         </Slide>
       </Deck>
     );

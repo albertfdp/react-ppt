@@ -1,5 +1,4 @@
-import { DECK_PROPERTIES } from '../components/Deck';
-import { SLIDE_PROPERTIES } from '../components/Slide';
+import { Deck, Slide, Text } from '../components';
 
 export const validateProps = (name, knownProps, props) => {
   Object.keys(props).forEach(key => {
@@ -10,9 +9,13 @@ export const validateProps = (name, knownProps, props) => {
 };
 
 export const validateDeckProps = props => {
-  return validateProps('Deck', [...DECK_PROPERTIES], props);
+  return validateProps('Deck', Object.keys(Deck.propTypes), props);
 };
 
 export const validateSlideProps = props => {
-  return validateProps('Slide', [...SLIDE_PROPERTIES], props);
+  return validateProps('Slide', Object.keys(Slide.propTypes), props);
+};
+
+export const validateTextProps = props => {
+  return validateProps('Text', Object.keys(Text.propTypes), props);
 };

@@ -1,13 +1,9 @@
+import PropTypes from 'prop-types';
+
 import Root from './Root';
 import { validateDeckProps } from '../validators';
 
-export const DECK_PROPERTIES = [
-  'author',
-  'company',
-  'revision',
-  'subject',
-  'title'
-];
+import yoga from 'yoga-layout';
 
 class Deck extends Root {
   static propTypes = {
@@ -16,16 +12,16 @@ class Deck extends Root {
     company: PropTypes.string,
     revision: PropTypes.string,
     subject: PropTypes.string,
-    title: PropTypes.string
+    title: PropTypes.string,
+    dir: PropTypes.string
+  };
+
+  static defaultProps = {
+    dir: 'ltr'
   };
 
   constructor(root, props) {
-    super(root, props);
-
-    this.root = root;
-    this.props = props;
-
-    this.children = [];
+    super(root, props, Deck.defaultProps);
 
     validateDeckProps(this.props);
   }
@@ -35,8 +31,12 @@ class Deck extends Root {
   }
 
   setProperties(props) {
+    const knownProps = Object.keys(Deck.propTypes).filter(
+      prop => !['dir', 'height', 'width', 'children'].includes(prop)
+    );
+
     Object.keys(props)
-      .filter(prop => DECK_PROPERTIES.includes(prop))
+      .filter(prop => knownProps.includes(prop))
       .map(key => {
         const method = `set${this._capitalize(key)}`;
         const value = props[key];
@@ -44,7 +44,7 @@ class Deck extends Root {
         this.root.pptx[method].call(this.root.pptx, value);
       });
 
-    if (props.rtl) {
+    if (props.dir === 'rtl') {
       this.root.pptx.setRTL(true);
     }
   }

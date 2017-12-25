@@ -1,17 +1,72 @@
 import Root from './Root';
+import PropTypes from 'prop-types';
+
+import { validateTextProps } from '../validators';
+
 import { renderText } from '../utils/nodes';
 import { normalize } from '../utils/colors';
 
 class Text extends Root {
-  static defaultProps = {
-    x: 1.0,
-    y: 1.0,
-    align: 'left',
-    autoFit: false,
-    bold: false,
-    breakLine: false,
-    bullet: false
+  static propTypes = {
+    x: PropTypes.number,
+    y: PropTypes.number,
+    w: PropTypes.number,
+    h: PropTypes.number,
+    align: PropTypes.oneOf(['left', 'center', 'right']),
+    autoFit: PropTypes.bool,
+    bold: PropTypes.bool,
+    breakLine: PropTypes.bool,
+    bullet: PropTypes.oneOfType([
+      PropTypes.shape({ type: PropTypes.number }),
+      PropTypes.shape({ code: PropTypes.string })
+    ]),
+    color: PropTypes.string,
+    children: PropTypes.node,
+    fill: PropTypes.string,
+    fontFace: PropTypes.string,
+    fontSize: PropTypes.number,
+    hyperlink: PropTypes.string,
+    indentLevel: PropTypes.number,
+    inset: PropTypes.number,
+    isTextBox: PropTypes.bool,
+    italic: PropTypes.bool,
+    lang: PropTypes.string,
+    lineSpacing: PropTypes.number,
+    margin: PropTypes.number,
+    rectRadius: PropTypes.number,
+    rotate: PropTypes.number,
+    rtlMode: PropTypes.bool,
+    shadow: PropTypes.shape({
+      type: PropTypes.string,
+      angle: PropTypes.number,
+      blur: PropTypes.number,
+      color: PropTypes.string,
+      offset: PropTypes.number,
+      opacity: PropTypes.number
+    }),
+    strike: PropTypes.bool,
+    subscript: PropTypes.bool,
+    superscript: PropTypes.bool,
+    underline: PropTypes.bool,
+    valign: PropTypes.oneOf(['top', 'middle', 'bottom']),
+    vert: PropTypes.oneOf([
+      'eaVert',
+      'horz',
+      'mongolianVert',
+      'vert',
+      'ver270',
+      'wordArtVert',
+      'wordArtVertRtl'
+    ])
   };
+
+  static defaultProps = {};
+
+  constructor(root, props) {
+    super(root, props, Text.defaultProps);
+
+    validateTextProps(this.props);
+  }
 
   appendChild(child) {
     this.children.push(child);
@@ -30,20 +85,28 @@ class Text extends Root {
   }
 
   getTextProps() {
-    const whitelist = ['color'];
+    const knownProps = Object.keys(Text.propTypes).filter(
+      prop => prop !== 'children'
+    );
 
-    return Object.keys(this.props)
-      .filter(key => whitelist.includes(key))
+    const props = [
+      ...Object.keys(this.props),
+      ...Object.keys(Text.defaultProps)
+    ]
+      .filter(prop => knownProps.includes(prop))
       .reduce((props, key) => {
-        const propName = getPropName(key);
-        props[propName] = this.props[propName] || defaultProps[propName];
+        const propName = this.getPropName(key);
+        props[propName] = this.props[key] || Text.defaultProps[key];
 
         if (propName === 'color' || propName === 'fill') {
-          props[propName] = normalize(props[propName]);
+          props[propName] = normalize(props[key]);
         }
 
         return props;
       }, {});
+
+    console.log('Text.props', props);
+    return props;
   }
 
   async renderChildren() {

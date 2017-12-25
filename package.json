@@ -26,7 +26,8 @@
     "fbjs": "^0.8.16",
     "pptxgenjs": "^1.10.0",
     "react": "^16.2.0",
-    "react-reconciler": "^0.7.0"
+    "react-reconciler": "^0.7.0",
+    "yoga-layout": "^1.8.0"
   },
   "jest": {
     "moduleNameMapper": {

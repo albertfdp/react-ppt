@@ -1,7 +1,14 @@
 class Root {
-  constructor(root, props) {
+  getInitialProps(props, defaultProps) {
+    return {
+      ...defaultProps,
+      ...props
+    };
+  }
+
+  constructor(root, props, defaultProps = {}) {
     this.root = root;
-    this.props = props;
+    this.props = this.getInitialProps(props, defaultProps);
 
     this.parent = null;
     this.children = [];
