@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "fbjs": "^0.8.16",
+    "parse-color": "^1.0.0",
     "pptxgenjs": "^1.10.0",
     "react": "^16.2.0",
     "react-reconciler": "^0.7.0",

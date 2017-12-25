@@ -12,11 +12,11 @@ class App extends Component {
         title="react-pptx"
         layout={LAYOUT.WIDE}
       >
-        <Slide backgroundColor="#db3d3d" color="#ffffff">
+        <Slide backgroundColor="cyan" color="blue">
           <Text
             fontFace="Comic Sans"
             bold
-            color="#fffd06"
+            color="hotpink"
             fontSize={30}
             x="5%"
             y="10%"
