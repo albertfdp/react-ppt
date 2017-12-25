@@ -13,3 +13,11 @@ export const renderChart = async (type, data, props, instance) => {
 export const renderMultiTypeChart = async (typesAndData, props, instance) => {
   await instance.addChart(typesAndData, props);
 };
+
+export const renderShape = async (shape, props, instance) => {
+  await instance.addShape(shape, props);
+};
+
+export const renderTextShape = async (child, shape, props, instance) => {
+  await instance.addText(child, { shape, ...props });
+};

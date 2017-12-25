@@ -6,6 +6,7 @@ const Slide = 'SLIDE';
 const Text = 'TEXT';
 const Image = 'IMAGE';
 const Chart = 'CHART';
+const Shape = 'SHAPE';
 
 const LAYOUT = {
   '16x9': 'LAYOUT_16x9',
@@ -14,4 +15,4 @@ const LAYOUT = {
   WIDE: 'LAYOUT_WIDE'
 };
 
-export { Deck, Slide, Chart, Text, Image, render, LAYOUT };
+export { Deck, Slide, Chart, Shape, Text, Image, render, LAYOUT };

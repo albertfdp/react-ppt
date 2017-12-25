@@ -1,4 +1,12 @@
-import { PowerPoint, Deck, Chart, Text, Slide, Image } from '../components';
+import {
+  PowerPoint,
+  Deck,
+  Chart,
+  Text,
+  Slide,
+  Shape,
+  Image
+} from '../components';
 
 let ROOT_NODE_INSTANCE = null;
 
@@ -20,6 +28,7 @@ const createElement = (type, props) => {
 
     DECK: () => new Deck(ROOT_NODE_INSTANCE, props),
 
+    SHAPE: () => new Shape(ROOT_NODE_INSTANCE, props),
     CHART: () => new Chart(ROOT_NODE_INSTANCE, props),
     IMAGE: () => new Image(ROOT_NODE_INSTANCE, props),
     TEXT: () => new Text(ROOT_NODE_INSTANCE, props),

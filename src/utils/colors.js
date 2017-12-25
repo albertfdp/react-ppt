@@ -3,5 +3,5 @@ const parseColor = require('parse-color');
 export const normalize = str => {
   const color = parseColor(str);
 
-  return color.hex.toUpperCase().replace('#', '');
+  return color && color.hex.toUpperCase().replace('#', '');
 };

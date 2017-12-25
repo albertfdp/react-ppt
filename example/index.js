@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { render, Deck, Chart, Slide, Text, Image, LAYOUT } from '../src';
+import { render, Deck, Chart, Slide, Shape, Text, Image, LAYOUT } from '../src';
 import path from 'path';
 
 class App extends Component {
@@ -54,6 +54,21 @@ class App extends Component {
               }
             ]}
           />
+        </Slide>
+        <Slide>
+          <Shape
+            type="right_triangle"
+            align="center"
+            x={0.4}
+            y={4.3}
+            w={6}
+            h={3}
+            fill="#0088cc"
+            line="#ff0000"
+            lineSize={3}
+          >
+            Right triangle
+          </Shape>
         </Slide>
       </Deck>
     );
