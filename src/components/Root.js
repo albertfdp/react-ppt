@@ -14,6 +14,10 @@ class Root {
     this.children = [];
   }
 
+  getProps() {
+    return this.props;
+  }
+
   appendChild(child) {
     child.parent = this;
     // console.log('appendChild', child);

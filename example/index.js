@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { render, Deck, Slide, Text } from '../src';
+import { render, Deck, Slide, Text, LAYOUT } from '../src';
 
 class App extends Component {
   render() {
@@ -10,9 +10,17 @@ class App extends Component {
         revision="1"
         subject="React"
         title="react-pptx"
+        layout={LAYOUT.WIDE}
       >
         <Slide backgroundColor="#db3d3d" color="#ffffff">
-          <Text bold color="#fffd06" fontSize={30} x="50%" y="50%">
+          <Text
+            fontFace="Comic Sans"
+            bold
+            color="#fffd06"
+            fontSize={30}
+            x="5%"
+            y="10%"
+          >
             Hello, World!
           </Text>
         </Slide>

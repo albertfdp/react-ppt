@@ -13,11 +13,20 @@ class Deck extends Root {
     revision: PropTypes.string,
     subject: PropTypes.string,
     title: PropTypes.string,
-    dir: PropTypes.string
+    dir: PropTypes.string,
+    layout: PropTypes.oneOfType([
+      PropTypes.oneOf(['16x9', '16x10', '4x3', 'wide']),
+      PropTypes.shape({
+        name: PropTypes.string,
+        width: PropTypes.number,
+        height: PropTypes.number
+      })
+    ])
   };
 
   static defaultProps = {
-    dir: 'ltr'
+    dir: 'ltr',
+    layout: 'LAYOUT_16x9'
   };
 
   constructor(root, props) {
@@ -39,7 +48,7 @@ class Deck extends Root {
       .filter(prop => knownProps.includes(prop))
       .map(key => {
         const method = `set${this._capitalize(key)}`;
-        const value = props[key];
+        const value = props[key] || Deck.defaultProps[key];
 
         this.root.pptx[method].call(this.root.pptx, value);
       });

@@ -78,6 +78,7 @@ class Text extends Root {
 
   getPropName(prop) {
     const props = {
+      fontFace: 'font_face',
       fontSize: 'font_size'
     };
 
@@ -85,15 +86,8 @@ class Text extends Root {
   }
 
   getTextProps() {
-    const knownProps = Object.keys(Text.propTypes).filter(
-      prop => prop !== 'children'
-    );
-
-    const props = [
-      ...Object.keys(this.props),
-      ...Object.keys(Text.defaultProps)
-    ]
-      .filter(prop => knownProps.includes(prop))
+    const props = Object.keys(this.props)
+      .filter(prop => prop !== 'children')
       .reduce((props, key) => {
         const propName = this.getPropName(key);
         props[propName] = this.props[key] || Text.defaultProps[key];
@@ -105,7 +99,6 @@ class Text extends Root {
         return props;
       }, {});
 
-    console.log('Text.props', props);
     return props;
   }
 
@@ -119,7 +112,10 @@ class Text extends Root {
           this.parent.slide
         );
       } else {
-        // noop
+        throw new Error(
+          `Children of Text can only be of type "string". Got ${typeof this
+            .children[i]}`
+        );
       }
     }
   }
