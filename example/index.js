@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render, Deck, Slide, Text, Image, LAYOUT } from '../src';
+import path from 'path';
 
 class App extends Component {
   render() {
@@ -24,7 +25,7 @@ class App extends Component {
             Hello, World!
           </Text>
           <Image
-            path="./example/logo.png"
+            path={path.join(__dirname, './logo.png')}
             x="30%"
             y="50%"
             hyperlink={{
