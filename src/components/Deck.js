@@ -39,7 +39,7 @@ class Deck extends Root {
 
   setProperties(props) {
     const knownProps = Object.keys(Deck.propTypes).filter(
-      prop => !['dir', 'height', 'width', 'children'].includes(prop)
+      prop => !['dir', 'children'].includes(prop)
     );
 
     Object.keys(props)
