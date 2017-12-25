@@ -1,9 +1,11 @@
 import render from './renderer/render';
+import pptx from 'pptxgenjs';
 
 const Deck = 'DECK';
 const Slide = 'SLIDE';
 const Text = 'TEXT';
 const Image = 'IMAGE';
+const Chart = 'CHART';
 
 const LAYOUT = {
   '16x9': 'LAYOUT_16x9',
@@ -12,4 +14,4 @@ const LAYOUT = {
   WIDE: 'LAYOUT_WIDE'
 };
 
-export { Deck, Slide, Text, Image, render, LAYOUT };
+export { Deck, Slide, Chart, Text, Image, render, LAYOUT };

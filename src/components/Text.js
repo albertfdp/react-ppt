@@ -1,7 +1,7 @@
 import Root from './Root';
 import PropTypes from 'prop-types';
 
-import { validateTextProps } from '../validators';
+import { validateProps } from '../validators';
 
 import { renderText } from '../utils/nodes';
 import { normalize } from '../utils/colors';
@@ -65,7 +65,7 @@ class Text extends Root {
   constructor(root, props) {
     super(root, props, Text.defaultProps);
 
-    validateTextProps(this.props);
+    validateProps(Text.propTypes, this.props);
   }
 
   appendChild(child) {

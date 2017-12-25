@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { render, Deck, Slide, Text, Image, LAYOUT } from '../src';
+import { render, Deck, Chart, Slide, Text, Image, LAYOUT } from '../src';
 import path from 'path';
 
 class App extends Component {
@@ -32,6 +32,27 @@ class App extends Component {
               url: 'https://reactjs.org/',
               tooltip: 'React.js'
             }}
+          />
+        </Slide>
+        <Slide>
+          <Chart
+            type="line"
+            x="70%"
+            y="70%"
+            w={12}
+            h={6}
+            data={[
+              {
+                name: 'Region 1',
+                labels: ['May', 'June', 'July', 'August'],
+                values: [26, 53, 100, 75]
+              },
+              {
+                name: 'Region 2',
+                labels: ['May', 'June', 'July', 'August'],
+                values: [43.5, 70.3, 90.1, 80.05]
+              }
+            ]}
           />
         </Slide>
       </Deck>

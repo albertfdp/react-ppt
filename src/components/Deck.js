@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 
 import Root from './Root';
-import { validateDeckProps } from '../validators';
-
-import yoga from 'yoga-layout';
+import { validateProps } from '../validators';
 
 class Deck extends Root {
   static propTypes = {
@@ -32,7 +30,7 @@ class Deck extends Root {
   constructor(root, props) {
     super(root, props, Deck.defaultProps);
 
-    validateDeckProps(this.props);
+    validateProps(Deck.propTypes, this.props);
   }
 
   _capitalize(str) {

@@ -1,7 +1,7 @@
 import Root from './Root';
 import PropTypes from 'prop-types';
 
-import { validateImageProps } from '../validators';
+import { validateProps } from '../validators';
 import { renderImage } from '../utils/nodes';
 
 class Image extends Root {
@@ -33,7 +33,7 @@ class Image extends Root {
   constructor(root, props) {
     super(root, props, Image.defaultProps);
 
-    validateImageProps(this.props);
+    validateProps(Image.propTypes, this.props);
   }
 
   appendChild(child) {
