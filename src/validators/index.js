@@ -1,4 +1,4 @@
-import { Deck, Slide, Text } from '../components';
+import { Deck, Slide, Text, Image } from '../components';
 
 export const validateProps = (name, knownProps, props) => {
   Object.keys(props).forEach(key => {
@@ -18,4 +18,8 @@ export const validateSlideProps = props => {
 
 export const validateTextProps = props => {
   return validateProps('Text', Object.keys(Text.propTypes), props);
+};
+
+export const validateImageProps = props => {
+  return validateProps('Image', Object.keys(Image.propTypes), props);
 };

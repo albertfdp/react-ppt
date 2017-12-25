@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { render, Deck, Slide, Text, LAYOUT } from '../src';
+import { render, Deck, Slide, Text, Image, LAYOUT } from '../src';
 
 class App extends Component {
   render() {
@@ -23,6 +23,15 @@ class App extends Component {
           >
             Hello, World!
           </Text>
+          <Image
+            path="./example/logo.png"
+            x="30%"
+            y="50%"
+            hyperlink={{
+              url: 'https://reactjs.org/',
+              tooltip: 'React.js'
+            }}
+          />
         </Slide>
       </Deck>
     );
