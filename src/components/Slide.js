@@ -14,9 +14,7 @@ class Slide extends Root {
       color: PropTypes.string,
       fontFace: PropTypes.string,
       fontSize: PropTypes.number
-    }),
-    width: PropTypes.number,
-    height: PropTypes.number
+    })
   };
 
   static defaultProps = {

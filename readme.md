@@ -6,6 +6,8 @@
 
 `react-ppt` is a library that lets you create PowerPoint presentations with React. It provides a set of low-level components which render your declarative slides and components to PowerPoint.
 
+`react-ppt` wraps [PptxGenJS](https://github.com/gitbrent/PptxGenJS) library, so you can refer to its documentation for the details on specific props.
+
 ## Example
 
 ```js
@@ -31,8 +33,6 @@ $ npm install --save react react-pptx
 
 ## Usage
 
-width: number, height: number
-
 * Create a `.babelrc`
 
 ```json
@@ -40,6 +40,8 @@ width: number, height: number
   "presets": ["env", "react"]
 }
 ```
+
+After configuring [babel](https://github.com/babel/babel) you can run the example in [Example](#example).
 
 ## Components
 
@@ -68,3 +70,35 @@ width: number, height: number
 | `layout`   | string or object | `16x9`  | `16x9`, `16x10`, `4x3`, `wide`, `{ name: string, width: number, height: number}` |
 
 [More info](https://github.com/gitbrent/PptxGenJS/blob/master/README.md#presentation-properties)
+
+### Slide
+
+```js
+<Slide
+  backgroundColor='red'
+  color='black'
+  number={{
+    x: '30%'
+    y: '50%',
+    color: 'blue',
+    fontFace: 'Comic Sans',
+    fontSize: 10
+  }}
+/>
+```
+
+| Prop              | Type   | Default | Options                            |
+| :---------------- | :----- | :------ | :--------------------------------- |
+| `backgroundColor` | string |         | `#000000`, `black`, `rgb(0, 0, 0)` |
+| `color`           | string |         | `#000000`, `black`, `rgb(0, 0, 0)` |
+| `number`          | object |         | See below                          |
+
+`number` props:
+
+| Prop       | Type             | Default | Examples                           |
+| :--------- | :--------------- | :------ | :--------------------------------- |
+| `x`        | string or number |         | `10`, `10%`                        |
+| `y`        | string or number |         | `10`, `10%`                        |
+| `color`    | string           |         | `#000000`, `black`, `rgb(0, 0, 0)` |
+| `fontFace` | string           |         | `Comic Sans`                       |
+| `fontSize` | number           |         | `10`                               |
