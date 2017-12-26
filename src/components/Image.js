@@ -6,10 +6,12 @@ import { renderImage } from '../utils/nodes';
 
 class Image extends Root {
   static propTypes = {
-    x: PropTypes.number,
-    y: PropTypes.number,
-    w: PropTypes.number,
-    h: PropTypes.number,
+    placement: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      width: PropTypes.number,
+      height: PropTypes.number
+    }),
     hyperlink: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
@@ -42,18 +44,6 @@ class Image extends Root {
 
   removeChild(child) {
     this.children = null;
-  }
-
-  getProps() {
-    const props = Object.keys(this.props)
-      .filter(prop => prop !== 'children')
-      .reduce((props, key) => {
-        props[key] = this.props[key] || Image.defaultProps[key];
-
-        return props;
-      }, {});
-
-    return props;
   }
 
   async render() {

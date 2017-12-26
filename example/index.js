@@ -19,15 +19,13 @@ class App extends Component {
             bold
             color="hotpink"
             fontSize={30}
-            x="5%"
-            y="10%"
+            placement={{ x: '25%', y: '10%' }}
           >
             Hello, World!
           </Text>
           <Image
             path={path.join(__dirname, './logo.png')}
-            x="30%"
-            y="50%"
+            placement={{ x: '30%', y: '50%' }}
             hyperlink={{
               url: 'https://reactjs.org/',
               tooltip: 'React.js'
@@ -37,10 +35,7 @@ class App extends Component {
         <Slide>
           <Chart
             type="line"
-            x="70%"
-            y="70%"
-            w={12}
-            h={6}
+            placement={{ x: '70%', y: '70%', width: 12, height: 6 }}
             data={[
               {
                 name: 'Region 1',
@@ -59,10 +54,7 @@ class App extends Component {
           <Shape
             type="right_triangle"
             align="center"
-            x={0.4}
-            y={4.3}
-            w={6}
-            h={3}
+            placement={{ x: 0.4, y: 4.3, width: 6, height: 3 }}
             fill="#0088cc"
             line="#ff0000"
             lineSize={3}

@@ -7,10 +7,12 @@ import { normalize } from '../utils/colors';
 
 class Shape extends Root {
   static propTypes = {
-    x: PropTypes.number,
-    y: PropTypes.number,
-    w: PropTypes.number,
-    h: PropTypes.number,
+    placement: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      weight: PropTypes.number,
+      height: PropTypes.number
+    }),
     align: PropTypes.oneOf(['left', 'right', 'center']),
     fill: PropTypes.oneOfType([
       PropTypes.string,
@@ -62,37 +64,6 @@ class Shape extends Root {
 
   removeChild(child) {
     this.children = null;
-  }
-
-  getPropName(prop) {
-    const props = {
-      lineDash: 'line_dash',
-      lineHead: 'line_head',
-      lineTail: 'line_tail'
-    };
-
-    return props[prop] || prop;
-  }
-
-  getProps() {
-    const props = Object.keys(this.props)
-      .filter(prop => prop !== 'children' && prop !== 'data')
-      .reduce((props, key) => {
-        const propName = this.getPropName(key);
-        let value = this.props[key] || Shape.defaultProps[key];
-
-        if (propName === 'fill' || propName === 'line') {
-          value =
-            typeof value === 'string'
-              ? normalize(value)
-              : { ...value, color: normalize(value.color) };
-        }
-
-        props[propName] = value;
-        return props;
-      }, {});
-
-    return props;
   }
 
   getType() {

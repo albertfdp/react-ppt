@@ -4,14 +4,9 @@ import PropTypes from 'prop-types';
 import { validateProps } from '../validators';
 
 import { renderText } from '../utils/nodes';
-import { normalize } from '../utils/colors';
 
 class Text extends Root {
   static propTypes = {
-    x: PropTypes.number,
-    y: PropTypes.number,
-    w: PropTypes.number,
-    h: PropTypes.number,
     align: PropTypes.oneOf(['left', 'center', 'right']),
     autoFit: PropTypes.bool,
     bold: PropTypes.bool,
@@ -36,6 +31,12 @@ class Text extends Root {
     rectRadius: PropTypes.number,
     rotate: PropTypes.number,
     rtlMode: PropTypes.bool,
+    placement: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      weight: PropTypes.number,
+      height: PropTypes.number
+    }),
     shadow: PropTypes.shape({
       type: PropTypes.string,
       angle: PropTypes.number,
@@ -76,38 +77,12 @@ class Text extends Root {
     this.children = null;
   }
 
-  getPropName(prop) {
-    const props = {
-      fontFace: 'font_face',
-      fontSize: 'font_size'
-    };
-
-    return props[prop] || prop;
-  }
-
-  getTextProps() {
-    const props = Object.keys(this.props)
-      .filter(prop => prop !== 'children')
-      .reduce((props, key) => {
-        const propName = this.getPropName(key);
-        props[propName] = this.props[key] || Text.defaultProps[key];
-
-        if (propName === 'color' || propName === 'fill') {
-          props[propName] = normalize(props[key]);
-        }
-
-        return props;
-      }, {});
-
-    return props;
-  }
-
   async renderChildren() {
     for (let i = 0; i < this.children.length; i++) {
       if (typeof this.children[i] === 'string') {
         await renderText(
           this.children[i],
-          this.getTextProps(),
+          this.getProps(),
           {},
           this.parent.slide
         );

@@ -6,10 +6,12 @@ import { renderChart } from '../utils/nodes';
 
 class Chart extends Root {
   static propTypes = {
-    x: PropTypes.number,
-    y: PropTypes.number,
-    w: PropTypes.number,
-    h: PropTypes.number,
+    placement: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      weight: PropTypes.number,
+      height: PropTypes.number
+    }),
     border: PropTypes.shape({
       pt: PropTypes.string,
       color: PropTypes.string
@@ -73,18 +75,6 @@ class Chart extends Root {
 
   removeChild(child) {
     this.children = null;
-  }
-
-  getProps() {
-    const props = Object.keys(this.props)
-      .filter(prop => prop !== 'children' && prop !== 'data')
-      .reduce((props, key) => {
-        props[key] = this.props[key] || Chart.defaultProps[key];
-
-        return props;
-      }, {});
-
-    return props;
   }
 
   getType() {
