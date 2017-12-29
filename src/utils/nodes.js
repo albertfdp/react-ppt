@@ -1,5 +1,5 @@
 export const renderText = async (child, props, styles, instance) => {
-  await instance.addText(child, props);
+  await instance.addText(child, { ...props, ...styles });
 };
 
 export const renderImage = async (props, instance) => {

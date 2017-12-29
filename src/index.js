@@ -1,12 +1,14 @@
 import render from './renderer/render';
 import pptx from 'pptxgenjs';
+import StyleSheet from './stylesheet';
+import createElement from './utils/createElement';
 
+const Chart = 'CHART';
 const Deck = 'DECK';
+const Image = 'IMAGE';
+const Shape = 'SHAPE';
 const Slide = 'SLIDE';
 const Text = 'TEXT';
-const Image = 'IMAGE';
-const Chart = 'CHART';
-const Shape = 'SHAPE';
 
 const LAYOUT = {
   '16x9': 'LAYOUT_16x9',
@@ -15,4 +17,15 @@ const LAYOUT = {
   WIDE: 'LAYOUT_WIDE'
 };
 
-export { Deck, Slide, Chart, Shape, Text, Image, render, LAYOUT };
+export {
+  Chart,
+  createElement,
+  Deck,
+  Image,
+  LAYOUT,
+  render,
+  Shape,
+  Slide,
+  StyleSheet,
+  Text
+};

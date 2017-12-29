@@ -7,12 +7,6 @@ import { normalize } from '../utils/colors';
 
 class Shape extends Root {
   static propTypes = {
-    placement: PropTypes.shape({
-      x: PropTypes.number,
-      y: PropTypes.number,
-      weight: PropTypes.number,
-      height: PropTypes.number
-    }),
     align: PropTypes.oneOf(['left', 'right', 'center']),
     fill: PropTypes.oneOfType([
       PropTypes.string,
@@ -47,15 +41,16 @@ class Shape extends Root {
     lineTail: PropTypes.string,
     rectRadius: PropTypes.number,
     rotate: PropTypes.number,
+    style: PropTypes.object,
     type: PropTypes.string
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    style: {}
+  };
 
   constructor(root, props) {
-    super(root, props, Shape.defaultProps);
-
-    validateProps(Shape.propTypes, this.props);
+    super(root, props);
   }
 
   appendChild(child) {
@@ -80,11 +75,15 @@ class Shape extends Root {
       await renderTextShape(
         children,
         this.getType(),
-        this.getProps(),
+        { ...this.getProps(), ...this.getStyle() },
         this.parent.slide
       );
     } else {
-      await renderShape(this.getType(), this.getProps(), this.parent.slide);
+      await renderShape(
+        this.getType(),
+        { ...this.getProps(), ...this.getStyle() },
+        this.parent.slide
+      );
     }
   }
 }

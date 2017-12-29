@@ -6,40 +6,42 @@ import { normalize } from '../utils/colors';
 
 class Slide extends Root {
   static propTypes = {
-    backgroundColor: PropTypes.string,
-    color: PropTypes.string,
     number: PropTypes.shape({
       x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       y: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       color: PropTypes.string,
       fontFace: PropTypes.string,
       fontSize: PropTypes.number
-    })
+    }),
+    style: PropTypes.object
   };
 
   static defaultProps = {
-    backgroundColor: 'white',
-    color: 'black'
+    style: {
+      backgroundColor: 'white',
+      color: 'black'
+    }
   };
 
   constructor(root, props) {
-    super(root, props, Slide.defaultProps);
+    super(root, props);
 
-    validateProps(Slide.propTypes, this.props);
-
-    // create a new slide
     this.slide = this.root.pptx.addNewSlide();
   }
 
-  setStyles(props) {
-    const { backgroundColor, color } = props;
+  setStyles() {
+    const { backgroundColor, color } = this.style;
 
-    this.slide.back = normalize(backgroundColor);
-    this.slide.color = normalize(color);
+    if (backgroundColor) {
+      this.slide.back = backgroundColor;
+    }
+    if (color) {
+      this.slide.color = color;
+    }
   }
 
   async render() {
-    this.setStyles(this.props);
+    this.setStyles();
 
     await this.renderChildren();
   }

@@ -31,12 +31,6 @@ class Text extends Root {
     rectRadius: PropTypes.number,
     rotate: PropTypes.number,
     rtlMode: PropTypes.bool,
-    placement: PropTypes.shape({
-      x: PropTypes.number,
-      y: PropTypes.number,
-      weight: PropTypes.number,
-      height: PropTypes.number
-    }),
     shadow: PropTypes.shape({
       type: PropTypes.string,
       angle: PropTypes.number,
@@ -46,6 +40,7 @@ class Text extends Root {
       opacity: PropTypes.number
     }),
     strike: PropTypes.bool,
+    style: PropTypes.object,
     subscript: PropTypes.bool,
     superscript: PropTypes.bool,
     underline: PropTypes.bool,
@@ -61,12 +56,12 @@ class Text extends Root {
     ])
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    style: {}
+  };
 
   constructor(root, props) {
-    super(root, props, Text.defaultProps);
-
-    validateProps(Text.propTypes, this.props);
+    super(root, props);
   }
 
   appendChild(child) {
@@ -77,19 +72,46 @@ class Text extends Root {
     this.children = null;
   }
 
+  getTextStyles() {
+    const {
+      fontWeight,
+      fontFace,
+      fontSize,
+      top,
+      left,
+      width,
+      height
+    } = this.style;
+
+    return {
+      bold: fontWeight === 'bold',
+      font_face: fontFace,
+      font_size: fontSize,
+      x: left,
+      y: top,
+      w: width,
+      h: height
+    };
+  }
+
   async renderChildren() {
+    const padding = this.getComputedPadding();
+    const { left, top, width, height } = this.getAbsoluteLayout();
+    console.log('Text.render', padding, this.getAbsoluteLayout());
+
     for (let i = 0; i < this.children.length; i++) {
-      if (typeof this.children[i] === 'string') {
+      const child = this.children[i];
+
+      if (typeof child === 'string') {
         await renderText(
-          this.children[i],
+          child,
           this.getProps(),
-          {},
+          this.getTextStyles(),
           this.parent.slide
         );
       } else {
         throw new Error(
-          `Children of Text can only be of type "string". Got ${typeof this
-            .children[i]}`
+          `Children of Text can only be of type "string". Got ${typeof child}`
         );
       }
     }

@@ -1,17 +1,10 @@
 import Root from './Root';
 import PropTypes from 'prop-types';
 
-import { validateProps } from '../validators';
 import { renderImage } from '../utils/nodes';
 
 class Image extends Root {
   static propTypes = {
-    placement: PropTypes.shape({
-      x: PropTypes.number,
-      y: PropTypes.number,
-      width: PropTypes.number,
-      height: PropTypes.number
-    }),
     hyperlink: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
@@ -27,15 +20,16 @@ class Image extends Root {
       y: PropTypes.number,
       w: PropTypes.number,
       h: PropTypes.number
-    })
+    }),
+    style: PropTypes.object
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    style: {}
+  };
 
   constructor(root, props) {
-    super(root, props, Image.defaultProps);
-
-    validateProps(Image.propTypes, this.props);
+    super(root, props);
   }
 
   appendChild(child) {
@@ -47,7 +41,10 @@ class Image extends Root {
   }
 
   async render() {
-    await renderImage(this.getProps(), this.parent.slide);
+    await renderImage(
+      { ...this.getProps(), ...this.getStyle() },
+      this.parent.slide
+    );
   }
 }
 

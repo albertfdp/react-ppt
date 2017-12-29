@@ -1,8 +1,8 @@
 const parse = input => {
   const parseComponent = async inputComponent => {
-    const { deck } = inputComponent;
+    const { document } = inputComponent;
 
-    await deck.render();
+    await document.render();
 
     return inputComponent;
   };

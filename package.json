@@ -7,6 +7,7 @@
   "author": "Albert Fernández",
   "license": "MIT",
   "scripts": {
+    "start": "yarn run dev",
     "dev": "babel-node example/index.js",
     "test": "jest",
     "test:watch": "npm run test -- --watch"
