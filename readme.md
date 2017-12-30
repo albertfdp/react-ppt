@@ -17,14 +17,14 @@ import { render, Deck, Slide, Text } from 'react-ppt';
 const App = () => (
   <Deck author="Me">
     <Slide
-      backgroundColor="#e3b143"
       style={{
+        backgroundColor: '#e3b143'
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center'
       }}
     >
-      <Text color="black">Hello World</Text>
+      <Text style={{ color: "black" }}>Hello World</Text>
     </Slide>
   </Deck>
 );
@@ -82,8 +82,6 @@ After configuring [babel](https://github.com/babel/babel) you can run the exampl
 
 ```js
 <Slide
-  backgroundColor='red'
-  color='black'
   number={{
     x: '30%'
     y: '50%',
@@ -92,17 +90,17 @@ After configuring [babel](https://github.com/babel/babel) you can run the exampl
     fontSize: 10
   }}
   style={{
+    backgroundColor: 'red',
+    color: 'black',
     flexGrow: 1
   }}
 />
 ```
 
-| Prop              | Type   | Default | Options                            |
-| :---------------- | :----- | :------ | :--------------------------------- |
-| `backgroundColor` | string |         | `#000000`, `black`, `rgb(0, 0, 0)` |
-| `color`           | string |         | `#000000`, `black`, `rgb(0, 0, 0)` |
-| `number`          | object |         | See below                          |
-| `style`           | object | {}      | See StyleSheet section             |
+| Prop     | Type   | Default | Options                |
+| :------- | :----- | :------ | :--------------------- |
+| `number` | object |         | See below              |
+| `style`  | object | {}      | See StyleSheet section |
 
 `number` props:
 
