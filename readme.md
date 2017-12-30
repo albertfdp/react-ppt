@@ -1,6 +1,6 @@
 # react-ppt
 
-> Create PowerPoint presentations with React
+> Create PowerPoint presentations with React using CSS and Flexbox layout
 
 ## Introduction
 
