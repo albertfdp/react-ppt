@@ -1,7 +1,6 @@
 import Root from './Root';
 import PropTypes from 'prop-types';
 
-import { validateProps } from '../validators';
 import { renderChart } from '../utils/nodes';
 
 class Chart extends Root {
@@ -64,9 +63,7 @@ class Chart extends Root {
   static defaultProps = {};
 
   constructor(root, props) {
-    super(root, props, Chart.defaultProps);
-
-    validateProps(Chart.propTypes, this.props);
+    super(root, props);
   }
 
   appendChild(child) {

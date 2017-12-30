@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import Root from './Root';
-import { validateProps } from '../validators';
+import { emu2px } from '../utils/measures';
 
 class Deck extends Root {
   static propTypes = {
@@ -27,37 +27,36 @@ class Deck extends Root {
     layout: 'LAYOUT_16x9'
   };
 
-  constructor(root, props) {
-    super(root, props, Deck.defaultProps);
+  addMetadata() {
+    const { author, company, revision, subject, title, dir } = this.props;
 
-    validateProps(Deck.propTypes, this.props);
-  }
+    if (author) {
+      this.root.pptx.setAuthor(author);
+    }
 
-  _capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
+    if (company) {
+      this.root.pptx.setCompany(company);
+    }
 
-  setProperties(props) {
-    const knownProps = Object.keys(Deck.propTypes).filter(
-      prop => !['dir', 'children'].includes(prop)
-    );
+    if (revision) {
+      this.root.pptx.setRevision(revision);
+    }
 
-    Object.keys(props)
-      .filter(prop => knownProps.includes(prop))
-      .map(key => {
-        const method = `set${this._capitalize(key)}`;
-        const value = props[key] || Deck.defaultProps[key];
+    if (subject) {
+      this.root.pptx.setSubject(subject);
+    }
 
-        this.root.pptx[method].call(this.root.pptx, value);
-      });
+    if (title) {
+      this.root.pptx.setTitle(title);
+    }
 
-    if (props.dir === 'rtl') {
+    if (dir && dir === 'rtl') {
       this.root.pptx.setRTL(true);
     }
   }
 
   async render() {
-    this.setProperties(this.props);
+    this.addMetadata();
 
     await this.renderChildren();
   }

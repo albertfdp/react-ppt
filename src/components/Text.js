@@ -1,11 +1,12 @@
 import Root from './Root';
 import PropTypes from 'prop-types';
-
-import { validateProps } from '../validators';
+import Yoga from 'yoga-layout';
 
 import { renderText } from '../utils/nodes';
 
 class Text extends Root {
+  static displayName = 'TEXT';
+
   static propTypes = {
     align: PropTypes.oneOf(['left', 'center', 'right']),
     autoFit: PropTypes.bool,
@@ -57,11 +58,15 @@ class Text extends Root {
   };
 
   static defaultProps = {
+    autoFit: true,
     style: {}
   };
 
   constructor(root, props) {
     super(root, props);
+
+    this.width = null;
+    this.height = null;
   }
 
   appendChild(child) {
@@ -72,43 +77,28 @@ class Text extends Root {
     this.children = null;
   }
 
-  getTextStyles() {
-    const {
-      fontWeight,
-      fontFace,
-      fontSize,
-      top,
-      left,
-      width,
-      height
-    } = this.style;
+  getStyle() {
+    const { fontWeight, fontFace, fontSize, ...other } = this.style;
 
     return {
       bold: fontWeight === 'bold',
       font_face: fontFace,
       font_size: fontSize,
-      x: left,
-      y: top,
-      w: width,
-      h: height
+      ...other,
+      ...super.getStyle()
     };
   }
 
   async renderChildren() {
     const padding = this.getComputedPadding();
-    const { left, top, width, height } = this.getAbsoluteLayout();
-    console.log('Text.render', padding, this.getAbsoluteLayout());
 
     for (let i = 0; i < this.children.length; i++) {
       const child = this.children[i];
+      const style = this.getStyle();
+      console.log('Text.style', style);
 
       if (typeof child === 'string') {
-        await renderText(
-          child,
-          this.getProps(),
-          this.getTextStyles(),
-          this.parent.slide
-        );
+        await renderText(child, this.getProps(), style, this.parent.slide);
       } else {
         throw new Error(
           `Children of Text can only be of type "string". Got ${typeof child}`

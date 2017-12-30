@@ -1,5 +1,6 @@
 import yogaValue from './yogaValue';
 import { normalize } from '../utils/colors';
+import { px2inch, inch2px } from '../utils/measures';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -107,6 +108,18 @@ const transformStyles = style => {
           if (hasOwnProperty.call(expandedProps, propName)) {
             resolvedStyle[propName] = value;
           }
+        }
+
+        break;
+      }
+      case 'height':
+      case 'width':
+      case 'top':
+      case 'left': {
+        if (typeof value === 'string' && value.endsWith('%')) {
+          resolvedStyle[key] = value;
+        } else {
+          resolvedStyle[key] = value;
         }
 
         break;

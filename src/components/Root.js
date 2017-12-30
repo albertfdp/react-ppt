@@ -1,12 +1,15 @@
 import Yoga from 'yoga-layout';
 import StyleSheet from '../stylesheet';
 import { normalize } from '../utils/colors';
+import { px2emu, inch2Emu, px2inch } from '../utils/measures';
 
 const COLOR_PROPS = ['color', 'fill', 'line'];
 
 const upperFirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 class Root {
+  static displayName = 'ROOT';
+
   static defaultProps = {
     style: {}
   };
@@ -31,6 +34,10 @@ class Root {
     }
   }
 
+  get displayName() {
+    return this.constructor.displayName;
+  }
+
   applyProps(props) {
     if (this.style) {
       Object.entries(this.style).map(([attr, value]) => {
@@ -52,12 +59,48 @@ class Root {
         this.layout.setPositionType(positionType);
         break;
       }
+      case 'top': {
+        this.setPosition(Yoga.EDGE_TOP, value);
+        break;
+      }
+      case 'right': {
+        this.setPosition(Yoga.EDGE_RIGHT, value);
+        break;
+      }
+      case 'bottom': {
+        this.setPosition(Yoga.EDGE_BOTTOM, value);
+        break;
+      }
+      case 'left': {
+        this.setPosition(Yoga.EDGE_LEFT, value);
+        break;
+      }
       default: {
         if (typeof this.layout[setter] === 'function') {
           this.layout[setter](value);
         }
       }
     }
+  }
+
+  setPosition(edge, value) {
+    const isPercent = /^(\d+)?%$/g.exec(value);
+
+    if (isPercent) {
+      this.layout.setPositionPercent(edge, parseInt(isPercent[1], 10));
+    } else {
+      this.layout.setPosition(edge, value);
+    }
+  }
+
+  async recalculateLayout() {
+    const children = Promise.all(
+      this.children.map(
+        child => child.recalculateLayout && child.recalculateLayout()
+      )
+    );
+
+    return children;
   }
 
   getAbsoluteLayout() {
@@ -110,12 +153,6 @@ class Root {
 
         if (COLOR_PROPS.includes(propName)) {
           props[propName] = normalize(value);
-        } else if (propName === 'placement') {
-          Object.keys(value).forEach(prop => {
-            const placementProp = this.getPropName(prop);
-
-            props[placementProp] = this.props.placement[prop];
-          });
         } else {
           props[propName] = value;
         }
@@ -125,14 +162,18 @@ class Root {
   }
 
   getStyle() {
-    const { top, left, height, width } = this.style;
+    const { left, top, width, height } = this.getAbsoluteLayout(); // px
+    const padding = this.getComputedPadding(); // px
 
-    return {
-      x: left,
-      y: top,
-      w: width,
-      h: height
+    const style = {
+      x: px2inch(left + padding.left),
+      y: px2inch(top + padding.top + 30),
+      w: px2inch(width - padding.left - padding.right),
+      h: px2inch(60) // (height - padding.top - padding.bottom)
     };
+
+    console.log(this.displayName, style);
+    return style; // inch
   }
 
   appendChild(child) {
