@@ -4,7 +4,7 @@
 
 ## Introduction
 
-`react-ppt` is a library that lets you create PowerPoint presentations with React. It provides a set of low-level components which render your declarative slides and components to PowerPoint.
+`react-ppt` is a library that lets you create PowerPoint presentations with React. It provides a set of low-level components which render your declarative slides and components to PowerPoint. It implements Facebook's [Yoga](https://github.com/facebook/yoga) layout engine, thus you can style the slides using `flexbox` instead of the traditional pptx libraries absolute positioning. It aims to support as much as possible `CSS` properties.
 
 `react-ppt` wraps [PptxGenJS](https://github.com/gitbrent/PptxGenJS) library, so you can refer to its documentation for the details on specific props.
 
@@ -16,7 +16,14 @@ import { render, Deck, Slide, Text } from 'react-ppt';
 
 const App = () => (
   <Deck author="Me">
-    <Slide backgroundColor="#e3b143">
+    <Slide
+      backgroundColor="#e3b143"
+      style={{
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
       <Text color="black">Hello World</Text>
     </Slide>
   </Deck>
@@ -84,6 +91,9 @@ After configuring [babel](https://github.com/babel/babel) you can run the exampl
     fontFace: 'Comic Sans',
     fontSize: 10
   }}
+  style={{
+    flexGrow: 1
+  }}
 />
 ```
 
@@ -92,6 +102,7 @@ After configuring [babel](https://github.com/babel/babel) you can run the exampl
 | `backgroundColor` | string |         | `#000000`, `black`, `rgb(0, 0, 0)` |
 | `color`           | string |         | `#000000`, `black`, `rgb(0, 0, 0)` |
 | `number`          | object |         | See below                          |
+| `style`           | object | {}      | See StyleSheet section             |
 
 `number` props:
 
